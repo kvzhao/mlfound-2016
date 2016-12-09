@@ -69,6 +69,7 @@ class PocketPLA():
 			return self.W
 
 		self.updates = 0
+		self.put_in_pocket_times = 0
 		if mode == 'normal':
 			self.W = np.random.randn(self.dim)
 			self.pocket_W = np.random.randn(self.dim)
