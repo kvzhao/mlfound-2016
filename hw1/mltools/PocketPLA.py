@@ -9,7 +9,6 @@ class PocketPLA():
 
 		self.W = []
 		self.pocket_W = []
-		self.best_err = 1000000.0
 		self.eta = 1.0
 		self.updates = 0
 		self.data_flawness = []
@@ -65,7 +64,7 @@ class PocketPLA():
 		return self.test_X, self.test_y
 
 	def init_weight(self, mode='normal'):
-		if (self.status != 'load_train_data') and (self.status != 'train'):
+		if not self.is_train_loaded:
 			print ('Please load training data first')
 			return self.W
 
@@ -83,9 +82,6 @@ class PocketPLA():
 		self.status = 'inited'
 
 	def train(self, itererations, loop_mode = 'rand_pick', eta = 1.0):
-		if (self.status != 'inited'):
-			print ('Plesae initialize weights first')
-			return 
 
 		self.status = 'train'
 		self.loop_mode = loop_mode
@@ -106,7 +102,10 @@ class PocketPLA():
 					self.put_in_pocket_times += 1
 		return self.put_in_pocket_times
 
-	def test(self):
+	def test(self, weight_type='pocket'):
 		if self.is_test_loaded:
-			errs = self._error(self.pocket_W, self.test_X, self.test_y) 
+			if weight_type == 'pocket':
+				errs = self._error(self.pocket_W, self.test_X, self.test_y) 
+			elif weight_type == 'onhand':
+				errs = self._error(self.W, self.test_X, self.test_y) 
 			return errs

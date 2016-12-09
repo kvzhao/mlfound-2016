@@ -21,3 +21,11 @@ pla.load_test_data(test_data_path)
 testnum = pla.N_test
 errs = pla.test()
 print ('Get %d errors on %d testing dataset, accuracy: %f percents' % (errs, testnum, 1.0-errs/float(testnum)))
+
+updates_list = []
+for i in range(2000):
+	num_of_updates = pla.train(num_of_iters)
+	updates_list.append(num_of_updates)
+	pla.init_weight(mode)
+
+print ('Average number of updates: %f' % np.mean(updates_list))
