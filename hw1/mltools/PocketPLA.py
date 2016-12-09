@@ -16,11 +16,11 @@ class PocketPLA():
 
 		self.N_train = 0
 		self.dim = 0
-		is_train_loaded = False
+		self.is_train_loaded = False
 		self.train_X = []
 		self.train_y = []
 
-		is_test_loaded = False
+		self.is_test_loaded = False
 		self.N_test = 0
 		self.test_X  = []
 		self.test_y  = []
