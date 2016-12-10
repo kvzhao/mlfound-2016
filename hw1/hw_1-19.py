@@ -38,6 +38,6 @@ plt.xlabel('Error Rate')
 plt.ylabel('Frequency')
 plt.title('Histrogram of Pocket-PLA Average Error-Rate (Updates: ' + str(num_of_iters) +' $\eta=1.0$)')
 plt.grid(True)
-plt.savefig('hist-errate-pocketpla-itr='+str(num_of_iters)+'-eta=1.png')
+plt.savefig('results/hist-errate-pocketpla-itr='+str(num_of_iters)+'-eta=1.png')
 
 print ('Average Error Rate after 2000 experiments: %d' % np.mean(errs_list))
