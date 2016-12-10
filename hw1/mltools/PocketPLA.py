@@ -82,14 +82,14 @@ class PocketPLA():
 
 		self.status = 'inited'
 
-	def train(self, itererations, loop_mode = 'rand_pick', eta = 1.0):
+	def train(self, updates, loop_mode = 'rand_pick', eta = 1.0):
 
 		self.status = 'train'
 		self.loop_mode = loop_mode
 
 		self.eta = eta
 
-		for it in range(itererations):
+		for it in range(updates):
 			r = np.random.randint(self.N_train)
 			x = self.train_X[r]
 			y = self.train_y[r]
@@ -101,6 +101,8 @@ class PocketPLA():
 				if self._error(self.W, self.train_X, self.train_y) < self._error(self.pocket_W, self.train_X, self.train_y):
 					self.pocket_W = self.W
 					self.put_in_pocket_times += 1
+			else:
+				it -= 1
 		return self.put_in_pocket_times
 
 	def test(self, weight_type='pocket'):
