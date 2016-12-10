@@ -2,7 +2,7 @@ from mltools.PocketPLA import PocketPLA
 import numpy as np
 import matplotlib.pyplot as plt
 
-print ('Prob 1-19')
+print ('Prob 1-20')
 train_data_path = 'data/hw1_18_train.dat'
 test_data_path = 'data/hw1_18_test.dat'
 
