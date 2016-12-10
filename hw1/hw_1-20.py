@@ -2,7 +2,7 @@ from mltools.PocketPLA import PocketPLA
 import numpy as np
 import matplotlib.pyplot as plt
 
-print ('Prob 1-18')
+print ('Prob 1-19')
 train_data_path = 'data/hw1_18_train.dat'
 test_data_path = 'data/hw1_18_test.dat'
 
@@ -13,7 +13,7 @@ mode = 'zero'
 pla.init_weight(mode)
 print ('Initialization method: ' + mode)
 
-num_of_iters = 50
+num_of_iters = 100
 num_of_updates = pla.train(num_of_iters)
 
 print('Pocket Updates %d times within %d iterations.' % (num_of_updates, num_of_iters))
@@ -26,18 +26,18 @@ print ('Get %d errors on %d testing dataset, accuracy: %f percents' % (errs, tes
 errs_list = []
 for i in range(2000):
 	num_of_updates = pla.train(num_of_iters)
-	errs = pla.test()
+	errs = pla.test(weight_type='onhand')
 	errs /= float(testnum)
 	errs = int(errs*100)
 	errs_list.append(errs)
 	pla.init_weight(mode)
 
-binwidth = 2
+binwidth = 5
 plt.hist(errs_list, bins=range(min(errs_list), max(errs_list) + binwidth, binwidth), color='g')
 plt.xlabel('Error Rate')
 plt.ylabel('Frequency')
-plt.title('Histrogram of Pocket-PLA Average Error-Rate (Updates: ' + str(num_of_iters) +' $\eta=1.0$)')
+plt.title('Histrogram of $w_{100}$ PLA Average Error-Rate (Updates: ' + str(num_of_iters) +' $\eta=1.0$)')
 plt.grid(True)
-plt.savefig('hist-errate-pocketpla-itr='+str(num_of_iters)+'-eta=1.png')
+plt.savefig('hist-errate-w100pla-itr='+str(num_of_iters)+'-eta=1.png')
 
 print ('Average Error Rate after 2000 experiments: %d' % np.mean(errs_list))

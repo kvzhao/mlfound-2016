@@ -21,3 +21,11 @@ for i in range(2000):
 	pla.init_weight(mode)
 
 print ('Average number of updates: %f' % np.mean(updates_list))
+
+binwidth = 5
+plt.hist(updates_list, bins=range(min(updates_list), max(updates_list) + binwidth, binwidth))
+plt.xlabel('# of Updates')
+plt.ylabel('Frequency')
+plt.title('Histrogram of PLA Updates (Random Cycle, $\eta=0.25$)')
+plt.grid(True)
+plt.savefig('hist-updates-pla-eta=025.png')
