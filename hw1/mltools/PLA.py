@@ -8,7 +8,7 @@ class PLA():
 		self.loop_mode = 'naive_cycle'
 
 		self.W = []
-		self.eta = 1.0
+		self.eta = 0.0
 		self.updates = 0
 		self.data_flawness = []
 
@@ -60,7 +60,7 @@ class PLA():
 
 		self.status = 'inited'
 
-	def train(self, loop_mode = 'naive_cycle', eta = 1.0):
+	def train(self, loop_mode = 'naive_cycle', eta = 0.25):
 		if (self.status != 'inited'):
 			print ('Plesae initialize weights first')
 			return 
@@ -78,7 +78,7 @@ class PLA():
 					y = self.train_y[i]
 					if np.sign(np.dot(self.W, x)) != y:
 						self.updates += 1
-						self.W = self.W + self.eta * x * y
+						self.W = self.W + self.eta * y * x
 						self.data_flawness[i] += 1
 						need_update = True
 				if not need_update:
@@ -92,7 +92,7 @@ class PLA():
 					y = self.train_y[i]
 					if np.sign(np.dot(self.W, x)) != y:
 						self.updates += 1
-						self.W = self.W + self.eta * x * y
+						self.W = self.W + self.eta * y * x
 						self.data_flawness[i] += 1
 						need_update = True
 				if not need_update:

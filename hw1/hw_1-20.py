@@ -32,7 +32,7 @@ for i in range(2000):
 	errs_list.append(errs)
 	pla.init_weight(mode)
 
-binwidth = 5
+binwidth = 3
 plt.hist(errs_list, bins=range(min(errs_list), max(errs_list) + binwidth, binwidth), color='g')
 plt.xlabel('Error Rate')
 plt.ylabel('Frequency')

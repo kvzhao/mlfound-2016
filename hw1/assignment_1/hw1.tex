@@ -1,0 +1,236 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx, float}
+\usepackage{listings}
+\usepackage{CJKutf8}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcommand{\e}{\epsilon}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][ ]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{reflection}[2][Reflection]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{prob}[2][Prob.]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2}]}{\end{trivlist}}
+\begin{document}
+\begin{CJK}{UTF8}{bsmi}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{Homework \#1}%replace X with the appropriate number
+\author{姓名：趙愷文 學號：R05222038, PHYS\\ %replace with your name
+Machine Learning Foundation (NTU, Fall 2016)} %if necessary, replace with your course title
+ 
+\maketitle
+ 
+\begin{prob}{1} Best suited for machine learning is (ii)\\
+Reason: We can not write down all potential disadvatnages or give precise rules to prevent bad things happen to banks. However, we are able to use historical data and macine learning to figuring out the hidden policy avoiding frauds. Choices (i), (iii) and (iv), we can write down specific formula or algorithm for them. Option (v) should accout for expert's opinon.
+\end{prob}
+
+\begin{prob}{2} Reinforcement Learning \\
+Machine learns policies by trying different actions and receving penalty or reward from environments. It is the framework of RL.
+\end{prob}
+
+\begin{prob}{3} Supervised Learning \\
+Because in this senario, books already have their own catalog and group. We can teach machine by 'seeing' enough examples, then machine can do the job.
+\end{prob}
+
+\begin{prob}{4} Unsupervised Learning \\
+Unsupervised learning algorithm can help automatically grouping the data according to some different intrinsic property. However, if we already have labels telling us face or non-face, supervised learning is also a reasonalbe choice.
+\end{prob}
+
+\begin{prob}{5} Active Learning \\
+First, biological experiments are expensive, so data and labels are rare. 
+We can do the experiments strategically and machine learns from the most 'valuable' data. So, active learning framework can help us in this case.
+\end{prob}
+
+\begin{prob}{6} Off-training set error \\
+	By the consideration, the hypothesis $g(x)$ can give correct answer on odd sample and fail on even one. 
+	So we only sum over odd data, which gives us the number of odd sample in the dataset.
+	\begin{align*}
+		E_{OTS}(f,g) = 
+		\begin{cases}
+			\frac{1}{L}\frac{L}{2} = \frac{1}{2} & \text{if } L \text{ is even} \\
+			\frac{1}{L}\frac{L+1}{2} = \frac{L+1}{2L} & \text{if } L \text{ is odd}
+		\end{cases}
+	\end{align*}
+\end{prob}
+
+\begin{prob}{7} Possibles of $f$ out of training set\\
+The possibilities of $L$ OTS examples: $2^L$. Each configuration has two choices of $y$. \\
+Possiblities of $f$: $2^{2^{L}}$.
+\end{prob}
+
+\begin{prob}{8} Deterministic $A$\\
+\end{prob}
+
+\begin{prob}{9} Bin Model $\mu = 0.5$ \\
+We get 10 blank marbles, then we paint green or orange color on each one following probaility $\mu$.
+So, we choose 5 out of 10 to be orange and others are green.
+\begin{align*}
+	P(\nu = 0.5) = C^{10}_{5} (\frac{1}{2})^5(\frac{1}{2})^5 = 0.2461
+\end{align*}
+\end{prob}
+
+\begin{prob}{10} Bin Model with $\mu = 0.8$ \\
+We get 10 blank marbles, then we paint green or orange color on each one following probaility $\mu$.
+So, we choose 8 out of 10 to be orange and rest 2 are green.
+\begin{align*}
+	P(\nu = 0.8) = C^{10}_{8} (\frac{8}{10})^8(1-\frac{8}{10})^2 = 0.3019
+\end{align*}
+\end{prob}
+
+\begin{prob}{11} Bin Model with $\mu = 0.8$ but $\nu \le 0.1$\\
+We get 10 blank marbles, then we paint green or orange color on each one following probaility $\mu$.
+However, we paint only 1 orange or 0 orange marble.
+\begin{align*}
+	P(\text{One orange marble}) + P(\text{None orange marble}) \\ 
+	= C^{10}_{1} (\frac{8}{10})^1(1-\frac{8}{10})^9 + (1-\frac{8}{10})^{10} = 4.1984\times 10^{-6}
+\end{align*}
+It is a pretty small probaility.
+\end{prob}
+
+\begin{prob}{12} Analyze Bin Model with Hoeffding Inequality $\mu = 0.8$ but $\nu \le 0.1$ \\
+	Hoeffding Inequality is formulated as 
+	\begin{align*}
+		P[|\nu-\mu| < \epsilon] \le 2\exp (-2\epsilon^2 N)
+	\end{align*}
+	In this problem, our $\e = 0.7$, 
+	\begin{align*}
+		P[|\nu-\mu| < \epsilon] \le 2\exp(-2\times 0.7 \times 10) = 0.0001109 \sim 10^{-3}
+	\end{align*}
+	The inequality gives us a bound stating that the event we discussed is rare.
+\end{prob}
+
+\begin{prob}{13} Get 5 green dices \\
+\begin{center}
+	\begin{tabular}{l*{3}{c}r}
+	Tpye of Dice & Orange & Green \\
+	\hline
+	A & 2, 4, 6 & 1, 3, 5  \\
+	B & 1, 3, 5 & 2, 4, 6  \\
+	C & 1, 2, 3 & 4, 5, 6  \\
+	D & 4, 5, 6 & 1, 2, 3  \\
+	\end{tabular}
+\end{center}
+From the above table, we find each time we take a dice, the probaility of getting green 1 is 
+\begin{align*}
+	P(\text{Green 1}) &= P(\text{A and Green 1}) + P(\text{D and Green 1})\\
+	&= (\frac{1}{4})\times(\frac{1}{6}) + (\frac{1}{4})\times(\frac{1}{6}) = \frac{1}{12}
+\end{align*}
+Suppose each time we pick a dice is independent. The probability of getting 5 green 1 dice is 
+\begin{align*}
+	P(\text{Five Green 1}) &= P(\text{Green 1})^5 = (\frac{1}{12})^5 = 4.0187 \times 10^{-06}
+\end{align*}
+\end{prob}
+
+\begin{prob}{14} 5 dices are purely green \\
+	No matter which kinds of dice we get, each dice has $1/2$ probaility getting green color. 
+	So the probability of taking 5 green dices from bag is 
+	\begin{align*}
+		P(\text{5 Green Dices}) = (\frac{1}{2})^5 = 0.3125
+	\end{align*}
+\end{prob}
+
+\begin{prob}{15}  - Naive Cycle \\
+My code shows the result below
+\begin{lstlisting}
+	python hw_1-15.py
+	Prob 1-15
+	Initialization method: zero
+	Number of Updates: 45
+	Most frequent update example: 58
+\end{lstlisting}
+\end{prob}
+
+\begin{prob}{16} - Random Cycle \\
+\begin{lstlisting}
+	python hw_1-16.py
+	Prob 1-16
+	Initialization method: zero
+	We run experiments 2,000 times with random cycle
+	Average number of updates: 40.217000
+\end{lstlisting}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../results/hist-updates-pla-eta=1.png}
+	\caption{}
+	\label{fig-1-16}
+\end{figure}
+\end{prob}
+
+\begin{prob}{17} - Learning Rate $\eta = 0.25$ \\
+\begin{lstlisting}
+	Prob 1-17
+	Initialization method: zero
+	We run experiments 2,000 times with random cycle, eta = 0.25
+	Average number of updates: 39.448500
+\end{lstlisting}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../results/hist-updates-pla-eta=025.png}
+	\caption{}
+	\label{fig-1-17}
+\end{figure}
+\end{prob}
+
+\begin{prob}{18} - Pocket PLA\\
+\begin{lstlisting}
+\end{lstlisting}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../results/hist-errate-pocketpla-itr=50-eta=1.png}
+	\caption{}
+	\label{fig-1-18}
+\end{figure}
+\end{prob}
+
+\begin{prob}{19} - Pocket PLA with 100 updates\\
+\begin{lstlisting}
+\end{lstlisting}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../results/hist-errate-pocketpla-itr=100-eta=1.png}
+	\caption{}
+	\label{fig-1-19}
+\end{figure}
+\end{prob}
+
+\begin{prob}{20} - $w_{100}$ PLA\\
+\begin{lstlisting}
+	Prob 1-20
+	Initialization method: zero
+	Average Error Rate after 2000 experiments: 26 \%
+\end{lstlisting}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../results/hist-errate-w100pla-itr=100-eta=1.png}
+	\caption{}
+	\label{fig-1-20}
+\end{figure}
+\end{prob}
+
+\end{CJK} 
+\end{document}
