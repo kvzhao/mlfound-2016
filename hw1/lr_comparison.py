@@ -8,7 +8,7 @@ pla = PLA()
 
 pla.load_train_data(data_path)
 
-mode = 'normal'
+mode = 'zero'
 pla.init_weight(mode)
 print ('Initialization method: ' + mode)
 
@@ -32,7 +32,7 @@ for lr in lr_sched:
 	meanw_vs_eta.append(np.mean(mean_w))
 	updates_vs_eta.append(np.mean(updates_list))
 
-plt.plot(updates_vs_eta)
+plt.plot(lr_sched, updates_vs_eta)
 plt.xlabel('Learning Rate $\eta$')
 plt.ylabel('Number of Updates')
 plt.title('Learning Rate vs Number of Updates ('+ mode +' Initailization)')
