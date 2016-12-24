@@ -7,7 +7,7 @@ data_path = 'data/hw1_15_train.dat'
 pla = PLA()
 
 pla.load_train_data(data_path)
-mode = 'zero'
+mode = 'normal'
 pla.init_weight(mode)
 print ('Initialization method: ' + mode)
 
@@ -28,4 +28,4 @@ plt.xlabel('# of Updates')
 plt.ylabel('Frequency')
 plt.title('Histrogram of PLA Updates (Random Cycle, $\eta=1.0$)')
 plt.grid(True)
-plt.savefig('results/hist-updates-pla-eta=1.png')
+plt.savefig('results/hist-updates-pla-'+mode+'eta=1.png')

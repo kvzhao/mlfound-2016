@@ -7,14 +7,14 @@ data_path = 'data/hw1_15_train.dat'
 pla = PLA()
 
 pla.load_train_data(data_path)
-mode = 'zero'
+mode = 'normal'
 pla.init_weight(mode)
 print ('Initialization method: ' + mode)
 
 loop_mode = 'rand_cycle'
 print ('We run experiments 2,000 times with random cycle, eta = 0.25')
 
-eta = 0.01
+eta = 0.001
 
 updates_list = []
 for i in range(2000):
@@ -30,4 +30,4 @@ plt.xlabel('# of Updates')
 plt.ylabel('Frequency')
 plt.title('Histrogram of PLA Updates (Random Cycle, $\eta='+str(eta)+'$)')
 plt.grid(True)
-plt.savefig('results/hist-updates-pla-eta='+str(eta)+'.png')
+plt.savefig('results/hist-updates-pla-eta-'+mode+'='+str(eta)+'.png')

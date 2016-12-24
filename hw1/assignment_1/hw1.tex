@@ -15,6 +15,9 @@
 \newcommand{\Z}{\mathbb{Z}}
 
 \newcommand{\e}{\epsilon}
+\newcommand{\yn}{\y_n}
+\newcommand{\xn}{\x_n}
+\newcommand{\wT}{\w^T}
  
 \newenvironment{theorem}[2][Theorem]{\begin{trivlist}
 \item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
@@ -176,9 +179,10 @@ My code shows the result below
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{../results/hist-updates-pla-eta=1.png}
-	\caption{}
+	\caption{Histogram of Number of Updates - PLA with Random Cycle}
 	\label{fig-1-16}
 \end{figure}
+Which gives us a little better updates performance.
 \end{prob}
 
 \begin{prob}{17} - Learning Rate $\eta = 0.25$ \\
@@ -191,45 +195,109 @@ My code shows the result below
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{../results/hist-updates-pla-eta=025.png}
-	\caption{}
+	\caption{Histogram of Updates Numbers - Random Cycle PLA with learning rate = 0.25}
 	\label{fig-1-17}
 \end{figure}
+Discussion: \\
+From results above, we can not see any differences from histogram which bothers us. Because we expect smaller learning rate indicates algorithm updates more slowlly, we should see higher number of updates as lowering learning rate. \\
+So, we can do experiments more carefully, and examine it with different weights initialization methods. Here, we use zero init, uniform init and normal distribution init.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../results/pla-eta-vs-updates-normal.png}
+	\caption{Normal Init: Learning Rate vs Updates}
+	\label{fig-1-17}
+\end{figure}
+
+Here we go! This is our expected result. Higher learning rates tunes the 'line' more quickly, that we need less updates to acheive the 'perfect line'. Besides, we find out weights initialization could influence the curve significantly. The normal distribution initialization fits our imagination best. And one interesting observation is that there is a minimum updates number as we use uniform init. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../results/pla-eta-vs-updates-uniform.png}
+	\caption{Uniform Init: Learning Rate vs Updates}
+	\label{fig-1-17}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../results/pla-eta-vs-updates-zero.png}
+	\caption{Zero Init: Learning Rate vs Updates}
+	\label{fig-1-17}
+\end{figure}
+
 \end{prob}
 
 \begin{prob}{18} - Pocket PLA\\
 \begin{lstlisting}
+Initialization method: zero
+Pocket Updates 3 times within 50 iterations.
+Get 88 errors on 500 testing dataset, accuracy: 82.4000 percents
+Average Error Rate after 2000 experiments: 18 percents
 \end{lstlisting}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{../results/hist-errate-pocketpla-itr=50-eta=1.png}
-	\caption{}
+	\caption{Histogram of Error Rate - Pocket PLA 50 updates}
 	\label{fig-1-18}
 \end{figure}
 \end{prob}
 
 \begin{prob}{19} - Pocket PLA with 100 updates\\
 \begin{lstlisting}
+python hw_1-19.py
+Prob 1-19
+Initialization method: zero
+Pocket Updates 4 times within 100 iterations.
+Get 72 errors on 500 testing dataset, accuracy: 85.6000 percents
+Average Error Rate after 2000 experiments: 14 percents
 \end{lstlisting}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{../results/hist-errate-pocketpla-itr=100-eta=1.png}
-	\caption{}
+	\caption{Histogram of Error Rate - Pocket PLA 100 updates}
 	\label{fig-1-19}
 \end{figure}
+Discussion:\\
+Compare two histograms we can conclude that more updates give us lower error rate. Not only the average rate decreases from 18 to 14 but the distribution is aligend to left-hand side. It states that the machine makes less mistakes.
+
 \end{prob}
 
 \begin{prob}{20} - $w_{100}$ PLA\\
 \begin{lstlisting}
-	Prob 1-20
-	Initialization method: zero
-	Average Error Rate after 2000 experiments: 26 \%
+Prob 1-20
+Initialization method: zero
+Pocket Updates 7 times within 100 iterations.
+Get 54 errors on 500 testing dataset, accuracy: 89.2000 percents
+Average Error Rate after 2000 experiments: 25 percents
 \end{lstlisting}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{../results/hist-errate-w100pla-itr=100-eta=1.png}
-	\caption{}
+	\caption{Histogram of Error Rate - $w_{100}$ PLA}
 	\label{fig-1-20}
 \end{figure}
+Discussion:\\
+The performance becomes worse than before as we expected. Because we ignore the best card in our hand but choosing the alternative, it pay us some price. The average error rate grows and its distribution becomes more unifrom. It states that algorithm sometime can make a disaster.
+\end{prob}
+
+\begin{prob}{21} New update always classify correctly\\
+If algorithm makes mistake at $(x_n, y_n)$, 
+\begin{align*}
+	y_n \ne \text{sign}(w^T_{t}x_n) \text{ but }  y_n = \text{sign}(w^T_{t+1}x_n) 
+\end{align*}
+Indicating $y_n w^T_t x_n < 0$ by follwing updates, we are going to show $y_n w^T_{t+1} x_n > 0$
+\begin{align*}
+	w_{t+1} \leftarrow w_t + y_nx_n [\frac{-y_nw^T_tx_n}{|x_n|^2}+1]
+\end{align*}
+We multiply $x_n$ and $y_n$ from both sides can get
+\begin{align*}
+	y_nw_{t+1}x_n &= y_nw_tx_n + y_ny_nx_n [\frac{-y_nw^T_tx_n}{|x_n|^2}+1] x_n\\
+	&= y_nw_tx_n + |y_n|^2[\frac{-y_nw^T_t}{|x_n|^2}]|x_n|^2 + |y_n|^2|x_n|^2 \\
+	&= (1-|y_n|^2)y_nw_tx_n + |y_nx_n|^2
+\end{align*}
+Due to binary classification, our labels are chooen $y = \pm 1, \ |y_n|^2 = 1$, so the first term is cancelled. Such that 
+\begin{align*}
+	y_nw_{t+1}x_n \ge 0
+\end{align*}
+It shows that updated weights could be correct on sample $(x_n, y_n)$
 \end{prob}
 
 \end{CJK} 
