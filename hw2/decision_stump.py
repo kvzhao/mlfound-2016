@@ -15,7 +15,7 @@ def findThreshold(x, y, s):
         h = s * np.concatenate([-np.ones(t),  np.ones(N-t)])
         errors[t+1] = np.sum(y != h)
 
-    err = np.min(errors)
+    err = np.min(errors[1:])
     idx = np.argmin(errors)
 
     x = [x[1], x, x[-1]]

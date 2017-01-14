@@ -21,7 +21,7 @@ Eout = np.mean(EoutList)
 print ('Ein: %f, Eout: %f' % (Ein, Eout))
 
 
-bins= 25
+bins= 5
 hist, bin_edges = np.histogram(EinList, bins=bins)
 plt.hist(EinList, bin_edges)
 
